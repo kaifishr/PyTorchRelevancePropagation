@@ -35,7 +35,7 @@ r = lrp_model.forward(x)
 
 ### Examples
 
-Examples show the $z^+$-plus-rule without and with additional relevance filter.
+Examples show the z-plus-rule without and with additional relevance filter.
 
 ![](./results/result_1.png)
 ![](./results/result_2.png)
@@ -59,7 +59,7 @@ MIT
 @misc{blogpost,
   title={Layer-wise Relevance Propagation for PyTorch},
   author={Fabi, Kai},
-  howpublished={\url{https://kaifabi.github.io/2021/02/02/relevance-propagation-pytorch.html}},
+  howpublished={\url{https://github.com/KaiFabi/PyTorchRelevancePropagation}},
   year={2021}
 }
 ```
