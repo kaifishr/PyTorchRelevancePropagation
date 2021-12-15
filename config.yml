@@ -1,0 +1,6 @@
+input_dir: "./input"
+output_dir: "./output"
+
+device: "gpu"  # gpu / cpu
+
+batch_size: 1  # LRP supports arbitrary batch size. Plot function does currently support only batch_size=1.
