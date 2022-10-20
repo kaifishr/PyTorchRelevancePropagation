@@ -20,7 +20,6 @@ class VideoRecorder(object):
             fourcc, 
             fps, 
             (resolution, resolution)
-            # (640, 480)
         )
 
     def record(self, image):
