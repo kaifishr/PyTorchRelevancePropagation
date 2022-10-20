@@ -78,7 +78,6 @@ This implementation comes with a novel relevance filter for much crisper heatmap
 |:---:|:---:|
 |![](./docs/relevance_filter/example_1.png)|![](./docs/relevance_filter/example_2.png)|
 |![](./docs/relevance_filter/example_3.png)|![](./docs/relevance_filter/example_4.png)|
-|![](./docs/relevance_filter/example_5.png)||
 
 ## TODOs
 
