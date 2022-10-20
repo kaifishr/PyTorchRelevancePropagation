@@ -16,6 +16,6 @@ def layers_lookup() -> dict:
         torch.nn.modules.flatten.Flatten: RelevancePropagationFlatten,
         torch.nn.modules.pooling.AvgPool2d: RelevancePropagationAvgPool2d,
         torch.nn.modules.pooling.MaxPool2d: RelevancePropagationMaxPool2d,
-        torch.nn.modules.pooling.AdaptiveAvgPool2d: RelevancePropagationAdaptiveAvgPool2d
+        torch.nn.modules.pooling.AdaptiveAvgPool2d: RelevancePropagationAdaptiveAvgPool2d,
     }
     return lookup_table

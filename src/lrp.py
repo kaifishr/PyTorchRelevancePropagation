@@ -10,18 +10,22 @@ Implementation can be adapted to work with other architectures as well by adding
         r = lrp_model.forward(x)
 
 """
+from copy import deepcopy
+
 import torch
 from torch import nn
-from copy import deepcopy
+
 from src.utils import layers_lookup
 
 
 class LRPModel(nn.Module):
     """Class wraps PyTorch model to perform layer-wise relevance propagation."""
 
-    def __init__(self, model: torch.nn.Module) -> None:
+    def __init__(self, model: torch.nn.Module, top_k: float = 0.0) -> None:
         super().__init__()
         self.model = model
+        self.top_k = top_k
+
         self.model.eval()  # self.model.train() activates dropout / batch normalization etc.!
 
         # Parse network
@@ -44,10 +48,12 @@ class LRPModel(nn.Module):
         # Run backwards through layers
         for i, layer in enumerate(layers[::-1]):
             try:
-                layers[i] = lookup_table[layer.__class__](layer=layer)
+                layers[i] = lookup_table[layer.__class__](layer=layer, top_k=self.top_k)
             except KeyError:
-                message = f"Layer-wise relevance propagation not implemented for " \
-                          f"{layer.__class__.__name__} layer."
+                message = (
+                    f"Layer-wise relevance propagation not implemented for "
+                    f"{layer.__class__.__name__} layer."
+                )
                 raise NotImplementedError(message)
 
         return layers

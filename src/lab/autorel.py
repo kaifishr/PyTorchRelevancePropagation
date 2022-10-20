@@ -4,7 +4,9 @@ import torch
 import time
 
 
-def lrp_v1(layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5) -> torch.tensor:
+def lrp_v1(
+    layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5
+) -> torch.tensor:
     z = layer.forward(a) + eps
     s = (r / z).data
     (z * s).sum().backward()
@@ -13,7 +15,9 @@ def lrp_v1(layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float 
     return r
 
 
-def lrp_v2(layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5) -> torch.tensor:
+def lrp_v2(
+    layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5
+) -> torch.tensor:
     w = layer.weight
     b = layer.bias
     z = torch.mm(a, w.T) + b + eps
@@ -23,7 +27,9 @@ def lrp_v2(layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float 
     return r
 
 
-def lrp_v3(layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5) -> torch.tensor:
+def lrp_v3(
+    layer: torch.nn.Linear, a: torch.tensor, r: torch.tensor, eps: float = 1e-5
+) -> torch.tensor:
     z = layer.forward(a) + eps
     s = r / z
     c = torch.mm(s, layer.weight)
@@ -56,19 +62,19 @@ def main():
     for _ in range(100):
         r1 = lrp_v1(linear, a, r)
         a.grad = torch.zeros_like(a)
-    print(time.time()-t0)
+    print(time.time() - t0)
     print(r1.sum(dim=-1))
 
     t0 = time.time()
     for _ in range(100):
         r2 = lrp_v2(linear, a, r)
-    print(time.time()-t0)
+    print(time.time() - t0)
     print(r2.sum(dim=-1))
 
     t0 = time.time()
     for _ in range(100):
         r3 = lrp_v3(linear, a, r)
-    print(time.time()-t0)
+    print(time.time() - t0)
     print(r3.sum(dim=-1))
 
     assert torch.allclose(r1, r2)

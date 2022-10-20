@@ -19,52 +19,68 @@ I also welcome pull requests improving this implementation.
 
 You can find more information about this implementation on my [blog](https://kaifabi.github.io).
 
-### To run
+## Executive Summary
 
-Running LRP for a VGG-like network is fairly straightforward
+Running LRP for a PyTorch VGG network is fairly straightforward
 
 ```python
 import torch
-import torchvision
+from torchvision.models import vgg16, VGG16_Weights
 from src.lrp import LRPModel
+
 x = torch.rand(size=(1, 3, 224, 224))
-model = torchvision.models.vgg16(pretrained=True)
+model = vgg16(weights=VGG16_Weights.DEFAULT)
 lrp_model = LRPModel(model)
 r = lrp_model.forward(x)
 ```
 
-### Examples
+## Example LRP Projects
 
-Examples show the z-plus-rule without and with additional relevance filter.
+There are currently three minimal LRP projects:
 
-![](./results/result_1.png)
-![](./results/result_2.png)
-![](./results/result_3.png)
-![](./results/result_4.png)
-![](./results/result_5.png)
+- Per-image LRP
+- Real-time LRP
+- Interactive LRP
 
-### TODOs
+These projects can be run using the following commands:
+
+```bash
+python -m projects.per_image_lrp.main
+python -m projects.real_time_lrp.main
+python -m projects.interactive_lrp.main
+```
+
+## Examples
+
+Examples show the $z^+$-rule without and with additional relevance filter.
+
+![](./docs/results/result_1.png)
+![](./docs/results/result_2.png)
+![](./docs/results/result_3.png)
+![](./docs/results/result_4.png)
+![](./docs/results/result_5.png)
+
+## TODOs
 
 - Add support for other network architectures (model agnostic)
 - Add control for layer parameters via config file.
-- Add control for relevance filter via config file.
 
-### License
+## License
 
 MIT
 
-### Citation
+## Citation
 
 ```bibtex
 @misc{blogpost,
   title={Layer-wise Relevance Propagation for PyTorch},
-  author={Fabi, Kai},
-  howpublished={\url{https://github.com/KaiFabi/PyTorchRelevancePropagation}},
+  author={Fischer, Kai},
+  howpublished={\url{https://github.com/kaifishr/PyTorchRelevancePropagation}},
   year={2021}
 }
 ```
 
-### References
+## References
 
 [[1]: On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation][bach2015]
 

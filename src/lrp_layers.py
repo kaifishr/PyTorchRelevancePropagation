@@ -5,9 +5,7 @@ Layers for layer-wise relevance propagation can be modified.
 """
 import torch
 from torch import nn
-from src.filter import relevance_filter
-
-top_k_percent = 0.04  # Proportion of relevance scores that are allowed to pass.
+from src.filter import relevance_filter 
 
 
 class RelevancePropagationAdaptiveAvgPool2d(nn.Module):
@@ -15,16 +13,19 @@ class RelevancePropagationAdaptiveAvgPool2d(nn.Module):
 
     Attributes:
         layer: 2D adaptive average pooling layer.
-        eps: a value added to the denominator for numerical stability.
+        eps: A value added to the denominator for numerical stability.
 
     """
 
-    def __init__(self, layer: torch.nn.AdaptiveAvgPool2d, eps: float = 1.0e-05) -> None:
+    def __init__(self, layer: torch.nn.AdaptiveAvgPool2d, eps: float = 1.0e-05, top_k: float = 0.0) -> None:
         super().__init__()
         self.layer = layer
         self.eps = eps
+        self.top_k = top_k
 
     def forward(self, a: torch.tensor, r: torch.tensor) -> torch.tensor:
+        if self.top_k:
+            r = relevance_filter(r, top_k_percent=self.top_k)
         z = self.layer.forward(a) + self.eps
         s = (r / z).data
         (z * s).sum().backward()
@@ -38,16 +39,19 @@ class RelevancePropagationAvgPool2d(nn.Module):
 
     Attributes:
         layer: 2D average pooling layer.
-        eps: a value added to the denominator for numerical stability.
+        eps: A value added to the denominator for numerical stability.
 
     """
 
-    def __init__(self, layer: torch.nn.AvgPool2d, eps: float = 1.0e-05) -> None:
+    def __init__(self, layer: torch.nn.AvgPool2d, eps: float = 1.0e-05, top_k: float = 0.0) -> None:
         super().__init__()
         self.layer = layer
         self.eps = eps
+        self.top_k = top_k
 
     def forward(self, a: torch.tensor, r: torch.tensor) -> torch.tensor:
+        if self.top_k:
+            r = relevance_filter(r, top_k_percent=self.top_k)
         z = self.layer.forward(a) + self.eps
         s = (r / z).data
         (z * s).sum().backward()
@@ -67,7 +71,7 @@ class RelevancePropagationMaxPool2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.MaxPool2d, mode: str = "avg", eps: float = 1.0e-05) -> None:
+    def __init__(self, layer: torch.nn.MaxPool2d, mode: str = "avg", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
         super().__init__()
 
         if mode == "avg":
@@ -76,8 +80,11 @@ class RelevancePropagationMaxPool2d(nn.Module):
             self.layer = layer
 
         self.eps = eps
+        self.top_k = top_k
 
     def forward(self, a: torch.tensor, r: torch.tensor) -> torch.tensor:
+        if self.top_k:
+            r = relevance_filter(r, top_k_percent=self.top_k)
         z = self.layer.forward(a) + self.eps
         s = (r / z).data
         (z * s).sum().backward()
@@ -97,7 +104,7 @@ class RelevancePropagationConv2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Conv2d, mode: str = "z_plus", eps: float = 1.0e-05) -> None:
+    def __init__(self, layer: torch.nn.Conv2d, mode: str = "z_plus", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
         super().__init__()
 
         self.layer = layer
@@ -107,9 +114,11 @@ class RelevancePropagationConv2d(nn.Module):
             self.layer.bias = torch.nn.Parameter(torch.zeros_like(self.layer.bias))
 
         self.eps = eps
+        self.top_k = top_k
 
     def forward(self, a: torch.tensor, r: torch.tensor) -> torch.tensor:
-        r = relevance_filter(r, top_k_percent=top_k_percent)
+        if self.top_k:
+            r = relevance_filter(r, top_k_percent=self.top_k)
         z = self.layer.forward(a) + self.eps
         s = (r / z).data
         (z * s).sum().backward()
@@ -129,7 +138,7 @@ class RelevancePropagationLinear(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Linear, mode: str = "z_plus", eps: float = 1.0e-05) -> None:
+    def __init__(self, layer: torch.nn.Linear, mode: str = "z_plus", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
         super().__init__()
 
         self.layer = layer
@@ -139,10 +148,12 @@ class RelevancePropagationLinear(nn.Module):
             self.layer.bias = torch.nn.Parameter(torch.zeros_like(self.layer.bias))
 
         self.eps = eps
+        self.top_k = top_k
 
     @torch.no_grad()
     def forward(self, a: torch.tensor, r: torch.tensor) -> torch.tensor:
-        r = relevance_filter(r, top_k_percent=top_k_percent)
+        if self.top_k:
+            r = relevance_filter(r, top_k_percent=self.top_k)
         z = self.layer.forward(a) + self.eps
         s = r / z
         c = torch.mm(s, self.layer.weight)
@@ -158,7 +169,7 @@ class RelevancePropagationFlatten(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Flatten) -> None:
+    def __init__(self, layer: torch.nn.Flatten, top_k: float = 0.0) -> None:
         super().__init__()
         self.layer = layer
 
@@ -175,7 +186,7 @@ class RelevancePropagationReLU(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.ReLU) -> None:
+    def __init__(self, layer: torch.nn.ReLU, top_k: float = 0.0) -> None:
         super().__init__()
 
     @torch.no_grad()
@@ -190,7 +201,7 @@ class RelevancePropagationDropout(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Dropout) -> None:
+    def __init__(self, layer: torch.nn.Dropout, top_k: float = 0.0) -> None:
         super().__init__()
 
     @torch.no_grad()
@@ -205,7 +216,7 @@ class RelevancePropagationIdentity(nn.Module):
 
     """
 
-    def __init__(self, layer) -> None:
+    def __init__(self, layer: nn.Module, top_k: float = 0.0) -> None:
         super().__init__()
 
     @torch.no_grad()
