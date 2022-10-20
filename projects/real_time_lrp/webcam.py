@@ -5,8 +5,7 @@ import numpy
 
 
 class Webcam:
-    """Returns central crop of webcam frame as Numpy array.
-    """
+    """Returns central crop of webcam frame as Numpy array."""
 
     def __init__(self, camera=0):
         """Initializes webcam class."""
@@ -29,6 +28,5 @@ class Webcam:
         return self._capture()
 
     def turn_off(self):
-        """Turns off webcam.
-        """
+        """Turns off webcam."""
         self.cam.release()

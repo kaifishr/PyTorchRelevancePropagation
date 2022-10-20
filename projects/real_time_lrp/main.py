@@ -76,11 +76,41 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-r", "--resolution", dest="resolution", help="Input resolution.", default=480, type=int)
-    parser.add_argument("-d", "--device", dest="device", help="Device.", default="gpu", type=str)
-    parser.add_argument("-f", "--fps", dest="fps", help="Frames per second of video.", default=20, type=int)
-    parser.add_argument("-v", "--record_video", dest="record_video", help="Record video.", default=True, type=bool)
-    parser.add_argument("-k", "--top-k", dest="top_k", help="Proportion of relevance scores that are allowed to pass.", default=0, type=float)
+    parser.add_argument(
+        "-r",
+        "--resolution",
+        dest="resolution",
+        help="Input resolution.",
+        default=480,
+        type=int,
+    )
+    parser.add_argument(
+        "-d", "--device", dest="device", help="Device.", default="gpu", type=str
+    )
+    parser.add_argument(
+        "-f",
+        "--fps",
+        dest="fps",
+        help="Frames per second of video.",
+        default=20,
+        type=int,
+    )
+    parser.add_argument(
+        "-v",
+        "--record_video",
+        dest="record_video",
+        help="Record video.",
+        default=True,
+        type=bool,
+    )
+    parser.add_argument(
+        "-k",
+        "--top-k",
+        dest="top_k",
+        help="Proportion of relevance scores that are allowed to pass.",
+        default=0,
+        type=float,
+    )
 
     config = parser.parse_args()
 

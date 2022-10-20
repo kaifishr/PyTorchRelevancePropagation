@@ -22,32 +22,25 @@ def get_data_loader(config: argparse.Namespace) -> torch.utils.data.DataLoader:
     batch_size = config.batch_size
 
     mean = [0.485, 0.456, 0.406]
-    std=[0.229, 0.224, 0.225]
+    std = [0.229, 0.224, 0.225]
+
+    transforms = []
 
     if config.resize:
 
-        transform = torchvision.transforms.Compose(
-            [
-                torchvision.transforms.Resize(size=int(1.1 * config.resize)),
-                torchvision.transforms.CenterCrop(size=config.resize),
-                torchvision.transforms.ToTensor(),
-                torchvision.transforms.Normalize(mean, std),
-            ]
-        )
+        transforms += [
+            torchvision.transforms.Resize(size=int(1.1 * config.resize)),
+            torchvision.transforms.CenterCrop(size=config.resize),
+        ]
 
-    else:
+    transforms += [
+        torchvision.transforms.ToTensor(),
+        torchvision.transforms.Normalize(mean, std),
+    ]
 
-        transform = torchvision.transforms.Compose(
-            [
-                torchvision.transforms.ToTensor(),
-                torchvision.transforms.Normalize(mean, std),
-            ]
-        )
-
+    transform = torchvision.transforms.Compose(transforms=transforms)
     dataset = torchvision.datasets.ImageFolder(root=input_dir, transform=transform)
 
-    data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=batch_size, shuffle=False, num_workers=0, pin_memory=True
-    )
+    data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size)
 
     return data_loader

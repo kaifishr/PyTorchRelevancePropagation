@@ -57,12 +57,48 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--input-dir", dest="input_dir", help="Input directory.", default="./input/")
-    parser.add_argument("-o", "--output-dir", dest="output_dir", help="Output directory.", default="./output/")
-    parser.add_argument("-b", "--batch-size", dest="batch_size", help="Batch size.", default=1, type=int)
-    parser.add_argument("-d", "--device", dest="device", help="Device.", default="gpu", type=str)
-    parser.add_argument("-k", "--top-k", dest="top_k", help="Proportion of relevance scores that are allowed to pass.", default=0.02, type=float)
-    parser.add_argument("-r", "--resize", dest="resize", help="Resize image before processing.", default=0, type=int)
+    parser.add_argument(
+        "-i",
+        "--input-dir",
+        dest="input_dir",
+        help="Input directory.",
+        default="./input/",
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        dest="output_dir",
+        help="Output directory.",
+        default="./output/",
+    )
+    parser.add_argument(
+        "-b", "--batch-size", dest="batch_size", help="Batch size.", default=1, type=int
+    )
+    parser.add_argument(
+        "-d",
+        "--device",
+        dest="device",
+        help="Device.",
+        choices=["gpu", "cpu"],
+        default="gpu",
+        type=str,
+    )
+    parser.add_argument(
+        "-k",
+        "--top-k",
+        dest="top_k",
+        help="Proportion of relevance scores that are allowed to pass.",
+        default=0.02,
+        type=float,
+    )
+    parser.add_argument(
+        "-r",
+        "--resize",
+        dest="resize",
+        help="Resize image before processing.",
+        default=0,
+        type=int,
+    )
 
     config = parser.parse_args()
 

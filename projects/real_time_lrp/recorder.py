@@ -16,10 +16,7 @@ class VideoRecorder(object):
 
         fourcc = cv2.VideoWriter_fourcc(*"XVID")
         self.video_writer = cv2.VideoWriter(
-            filename, 
-            fourcc, 
-            fps, 
-            (resolution, resolution)
+            filename, fourcc, fps, (resolution, resolution)
         )
 
     def record(self, image):

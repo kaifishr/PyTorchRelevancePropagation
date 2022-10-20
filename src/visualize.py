@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import torch
 
 
-def plot_relevance_scores(x: torch.tensor, r: torch.tensor, name: str, config: argparse.Namespace) -> None:
+def plot_relevance_scores(
+    x: torch.tensor, r: torch.tensor, name: str, config: argparse.Namespace
+) -> None:
     """Plots results from layer-wise relevance propagation next to original image.
 
     Method currently accepts only a batch size of one.
@@ -23,7 +25,10 @@ def plot_relevance_scores(x: torch.tensor, r: torch.tensor, name: str, config: a
 
     _, _, img_height, img_width = x.shape
     max_dim = max(img_height, img_width)
-    fig_height, fig_width = max_fig_size * img_height / max_dim, max_fig_size * img_width / max_dim
+    fig_height, fig_width = (
+        max_fig_size * img_height / max_dim,
+        max_fig_size * img_width / max_dim,
+    )
 
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(fig_width, fig_height))
 

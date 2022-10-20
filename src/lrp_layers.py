@@ -5,7 +5,7 @@ Layers for layer-wise relevance propagation can be modified.
 """
 import torch
 from torch import nn
-from src.filter import relevance_filter 
+from src.filter import relevance_filter
 
 
 class RelevancePropagationAdaptiveAvgPool2d(nn.Module):
@@ -17,7 +17,12 @@ class RelevancePropagationAdaptiveAvgPool2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.AdaptiveAvgPool2d, eps: float = 1.0e-05, top_k: float = 0.0) -> None:
+    def __init__(
+        self,
+        layer: torch.nn.AdaptiveAvgPool2d,
+        eps: float = 1.0e-05,
+        top_k: float = 0.0,
+    ) -> None:
         super().__init__()
         self.layer = layer
         self.eps = eps
@@ -43,7 +48,9 @@ class RelevancePropagationAvgPool2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.AvgPool2d, eps: float = 1.0e-05, top_k: float = 0.0) -> None:
+    def __init__(
+        self, layer: torch.nn.AvgPool2d, eps: float = 1.0e-05, top_k: float = 0.0
+    ) -> None:
         super().__init__()
         self.layer = layer
         self.eps = eps
@@ -71,7 +78,13 @@ class RelevancePropagationMaxPool2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.MaxPool2d, mode: str = "avg", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
+    def __init__(
+        self,
+        layer: torch.nn.MaxPool2d,
+        mode: str = "avg",
+        eps: float = 1.0e-05,
+        top_k: float = 0.0,
+    ) -> None:
         super().__init__()
 
         if mode == "avg":
@@ -104,7 +117,13 @@ class RelevancePropagationConv2d(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Conv2d, mode: str = "z_plus", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
+    def __init__(
+        self,
+        layer: torch.nn.Conv2d,
+        mode: str = "z_plus",
+        eps: float = 1.0e-05,
+        top_k: float = 0.0,
+    ) -> None:
         super().__init__()
 
         self.layer = layer
@@ -138,7 +157,13 @@ class RelevancePropagationLinear(nn.Module):
 
     """
 
-    def __init__(self, layer: torch.nn.Linear, mode: str = "z_plus", eps: float = 1.0e-05, top_k: float = 0.0) -> None:
+    def __init__(
+        self,
+        layer: torch.nn.Linear,
+        mode: str = "z_plus",
+        eps: float = 1.0e-05,
+        top_k: float = 0.0,
+    ) -> None:
         super().__init__()
 
         self.layer = layer
