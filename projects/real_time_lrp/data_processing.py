@@ -4,7 +4,7 @@ import cv2
 import numpy
 
 import torch
-from torchvision import transforms
+import torchvision.transforms
 
 
 class DataProcessing:
@@ -14,18 +14,21 @@ class DataProcessing:
         mean = [0.485, 0.456, 0.406]
         std = [0.229, 0.224, 0.225]
 
-        size = config.resolution
+        transforms = [torchvision.transforms.ToPILImage(), ]
 
-        self.transform = transforms.Compose(
-            [
-                transforms.ToPILImage(),
-                transforms.Resize(size=int(1.1 * size)),
-                transforms.CenterCrop(size=size),
-                transforms.ToTensor(),
-                transforms.Normalize(mean, std),
+        if config.resize:
+
+            transforms += [
+                torchvision.transforms.Resize(size=int(1.1 * config.resize)),
+                torchvision.transforms.CenterCrop(size=config.resize),
             ]
-        )
 
+        transforms += [
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize(mean, std),
+        ]
+
+        self.transform = torchvision.transforms.Compose(transforms=transforms)
         self.device = device
 
     def preprocess(self, frame: numpy.ndarray) -> torch.Tensor:

@@ -36,13 +36,7 @@ r = lrp_model.forward(x)
 
 ## Example LRP Projects
 
-There are currently three minimal LRP projects:
-
-- Per-image LRP
-- Real-time LRP
-- Interactive LRP
-
-These projects can be run using the following commands:
+There are currently three minimal LRP projects. These projects can be run using the following commands:
 
 ```bash
 python -m projects.per_image_lrp.main
@@ -50,20 +44,45 @@ python -m projects.real_time_lrp.main
 python -m projects.interactive_lrp.main
 ```
 
-## Examples
+### Per-image LRP
 
-Examples show the $z^+$-rule without and with additional relevance filter.
+Per-image LRP allows to process images located in the *input* folder. With this option high resolution relevance heatmaps can be created.
 
-![](./docs/results/result_1.png)
-![](./docs/results/result_2.png)
-![](./docs/results/result_3.png)
-![](./docs/results/result_4.png)
-![](./docs/results/result_5.png)
+|||
+|:---:|:---:|
+|![](./docs/per_image_lrp/example_1.png)|![](./docs/per_image_lrp/example_2.png)|
+|![](./docs/per_image_lrp/example_3.png)|![](./docs/per_image_lrp/example_4.png)|
+|![](./docs/per_image_lrp/example_5.png)|![](./docs/per_image_lrp/example_6.png)|
+|![](./docs/per_image_lrp/example_7.png)|![](./docs/per_image_lrp/example_8.png)|
+
+### Real-time LRP
+
+Real-time LRP lets you use your webcam to create a heatmap video stream.
+
+![](./docs/real_time_lrp/example)
+
+### Interactive LRP
+
+Interactive LRP allows you to manipulate the input space with different kind of patches.
+
+| Input | Relevance Scores |
+|:---:|:---:|
+|![](./docs/interactive_lrp/input.png)|![](./docs/interactive_lrp/relevance_scores.png)|
+
+
+## Relevance Filter
+
+This implementation comes with a novel relevance filter for much crisper heatmaps. Examples show the $z^+$-rule without and with additional relevance filter.
+
+| | |
+|:---:|:---:|
+|![](./docs/relevance_filter/example_1.png)|![](./docs/relevance_filter/example_2.png)|
+|![](./docs/relevance_filter/example_3.png)|![](./docs/relevance_filter/example_4.png)|
+|![](./docs/relevance_filter/example_5.png)||
 
 ## TODOs
 
 - Add support for other network architectures (model agnostic)
-- Add control for layer parameters via config file.
 
 ## License
 
