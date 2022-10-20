@@ -14,9 +14,10 @@ import pathlib
 import torch
 from torchvision.models import vgg16, VGG16_Weights
 
-from src.visualize import plot_relevance_scores
 from src.data import get_data_loader
 from src.lrp import LRPModel
+
+from projects.per_image_lrp.visualize import plot_relevance_scores
 
 
 def per_image_lrp(config: argparse.Namespace) -> None:
