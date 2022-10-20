@@ -17,7 +17,7 @@ Using a RTX 2080 Ti graphics card I reach 53 FPS with the VGG-16 network.
 If I find the time, I will provide a more model agnostic implementation. 
 I also welcome pull requests improving this implementation.
 
-You can find more information about this implementation on my [blog](https://kaifabi.github.io).
+You can find more information about this implementation on my [blog](https://kaifishr.github.io/).
 
 ## Executive Summary
 
