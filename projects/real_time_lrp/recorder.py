@@ -10,7 +10,7 @@ class VideoRecorder(object):
     def __init__(self, config: argparse.Namespace):
         """Initializes video recorder class."""
 
-        resolution = config.resolution
+        resolution = config.resize
         fps = config.fps
         filename = "output.avi"
 

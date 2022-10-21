@@ -36,7 +36,7 @@ r = lrp_model.forward(x)
 
 ## Example LRP Projects
 
-There are currently three minimal LRP projects. These projects can be run using the following commands:
+Currently there are three minimal LRP projects. These projects can be executed with the following commands:
 
 ```bash
 python -m projects.per_image_lrp.main
@@ -46,7 +46,7 @@ python -m projects.interactive_lrp.main
 
 ### Per-image LRP
 
-Per-image LRP allows to process images located in the *input* folder. With this option high resolution relevance heatmaps can be created.
+Per-image LRP applies Layer-wise relevance propagation to all images located in the *input* folder. With this option high resolution relevance heatmaps can be created.
 
 |||
 |:---:|:---:|
@@ -57,13 +57,15 @@ Per-image LRP allows to process images located in the *input* folder. With this 
 
 ### Real-time LRP
 
-Real-time LRP lets you use your webcam to create a heatmap video stream.
+Real-time LRP lets you use your webcam to create a heatmap video stream. The example below shows images filmed from a monitor.
 
-![](./docs/real_time_lrp/example)
+<p align="center">
+    <img src="./docs/real_time_lrp/output.gif" height="480">
+</p>
 
 ### Interactive LRP
 
-Interactive LRP allows you to manipulate the input space with different kind of patches.
+Interactive LRP allows you to manipulate the input space with different kind of patches. This option is interesting to see how the network reacts to changes in the image input space.
 
 | Input | Relevance Scores |
 |:---:|:---:|

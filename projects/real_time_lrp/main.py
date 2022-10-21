@@ -12,10 +12,10 @@ import torch
 from torchvision.models import vgg16, VGG16_Weights
 
 from src.lrp import LRPModel
+from src.data_processing import DataProcessing
 
 from projects.real_time_lrp.webcam import Webcam
 from projects.real_time_lrp.recorder import VideoRecorder
-from projects.real_time_lrp.data_processing import DataProcessing
 
 
 def real_time_lrp(config: argparse.Namespace) -> None:
@@ -78,15 +78,17 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "-r",
-        "--resolution",
-        dest="resolution",
-        help="Input resolution.",
-        default=480,
+        "--resize",
+        dest="resize",
+        help="Resize image before processing.",
+        default=640,
         type=int,
     )
+
     parser.add_argument(
         "-d", "--device", dest="device", help="Device.", default="gpu", type=str
     )
+
     parser.add_argument(
         "-f",
         "--fps",
@@ -95,6 +97,7 @@ if __name__ == "__main__":
         default=20,
         type=int,
     )
+
     parser.add_argument(
         "-v",
         "--record_video",
@@ -103,6 +106,7 @@ if __name__ == "__main__":
         default=True,
         type=bool,
     )
+
     parser.add_argument(
         "-k",
         "--top-k",
