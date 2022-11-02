@@ -1,6 +1,6 @@
-# Layer-wise Relevance Propagation (LRP) in PyTorch
+# Layer-wise Relevance Propagation in PyTorch
 
-Basic unsupervised implementation of Layer-wise Relevance Propagation ([Bach et al.][bach2015], 
+Basic implementation of unsupervised Layer-wise Relevance Propagation (LRP, [Bach et al.][bach2015], 
 [Montavon et al.][montavon2019]) in PyTorch for VGG networks from PyTorch's Model Zoo. 
 [This][montavon_gitlab] tutorial served as a starting point. 
 In this implementation, I tried to make sure that the code is easy to understand and easy to extend to other 
